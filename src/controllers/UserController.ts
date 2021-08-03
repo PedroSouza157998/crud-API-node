@@ -67,6 +67,6 @@ interface Query {
         if(!accressToken){
             res.send("Cadastro invalido")
         }
-        return res.json({accressToken, refreshToken})
+        res.json({query, accressToken})
     },
 }
