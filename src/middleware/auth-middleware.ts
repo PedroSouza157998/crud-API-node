@@ -4,6 +4,7 @@ export const authMiddleware = (req: Request, res: Response, next: NextFunction) 
     try{
         const token = req.headers['authorization']?.toString().replace('Bearer ', ''). trim();
         // const decoded = await JW
+        next()
     }catch(err){
         res.send("ERRO !!!!!")
     }
