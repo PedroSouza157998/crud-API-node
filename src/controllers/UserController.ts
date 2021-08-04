@@ -21,13 +21,18 @@ interface Query {
         const data: PersoneModel = req.body
         await database.sync()
         
-        const query  = await users.build({
+        const query: Query | any  = await users.build({
             name: data.name,
             password: data.password
         })
         await query.save()
+        const accressToken = await generateToken({
+            access_token: true,
+            userName: query.name,
+            expo: Math.floor(Date.now() / 1000) + 3600
+        })
         
-        res.send(data)
+        res.json({query, accressToken})
     },
 
 
@@ -54,13 +59,13 @@ interface Query {
         
         const accressToken = await generateToken({
             access_token: true,
-            userId: query.id,
+            userId: query.name,
             expo: Math.floor(Date.now() / 1000) + 3600
         })
 
         const refreshToken = await generateToken({
             refresh: true,
-            userId: query.id,
+            userId: query.name,
             expo: Math.floor(Date.now() / 1000) + 7200
         })
 
